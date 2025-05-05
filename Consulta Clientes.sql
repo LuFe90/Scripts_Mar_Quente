@@ -1,5 +1,6 @@
 SELECT 
-	RTRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
+	RTRIM(cadastro_cli_for.INATIVO) AS INATIVO -- 0 Ativo / 1 Inativo
+	,RTRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
 	,RTRIM(cadastro_cli_for.nome_clifor) AS NOME
 	,RTRIM(cadastro_cli_for.razao_social) AS RAZAO_SOCIAL
 	,RTRIM(cadastro_cli_for.pj_pf) AS PF_PJ -- 1 PF / 0 PJ
@@ -182,5 +183,5 @@ FROM   clientes_atacado
               ON cadastro_cli_for.indicador_fiscal_terceiro = ctb_lx_indicador_fiscal_terceiro.indicador_fiscal_terceiro
        LEFT JOIN ctb_excecao_grupo
               ON cadastro_cli_for.id_excecao_grupo = ctb_excecao_grupo.id_excecao_grupo
-WHERE  ( 1 = 1 )
+WHERE  cadastro_cli_for.INATIVO = 0
 ORDER BY tipo_bloqueio 
