@@ -1,55 +1,55 @@
-SELECT 
-	RTRIM(cadastro_cli_for.INATIVO) AS INATIVO -- 0 Ativo / 1 Inativo
-	,RTRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
-	,RTRIM(cadastro_cli_for.nome_clifor) AS NOME
-	,RTRIM(cadastro_cli_for.razao_social) AS RAZAO_SOCIAL
-	,RTRIM(cadastro_cli_for.pj_pf) AS PF_PJ -- 1 PF / 0 PJ
-	,RTRIM(cadastro_cli_for.cgc_cpf) AS CPF_CNPJ
-	,RTRIM(cadastro_cli_for.rg_ie) AS RG_IE
+SELECT TOP(10)
+	REPLACE(cadastro_cli_for.INATIVO,' ','') AS INATIVO -- 0 Ativo / 1 Inativo
+	,TRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
+	,TRIM(cadastro_cli_for.nome_clifor) AS NOME
+	,TRIM(cadastro_cli_for.razao_social) AS RAZAO_SOCIAL
+	,REPLACE(cadastro_cli_for.pj_pf,' ','') AS PF_PJ -- 1 PF / 0 PJ
+	,TRIM(cadastro_cli_for.cgc_cpf) AS CPF_CNPJ
+	,TRIM(cadastro_cli_for.rg_ie) AS RG_IE
 	--Verifica campos de bloqueio do cadastro
-	,RTRIM(clientes_atacado.tipo) AS TIPO_CLIENTE
-	,RTRIM(clientes_atacado.limite_credito) AS LIMITE_CREDITO
-	,RTRIM(clientes_atacado.sem_credito) AS SEM_CREDITO
-	,RTRIM(clientes_atacado.tipo_bloqueio) AS TIPO_BLOQUEIO
-	,RTRIM(clientes_atacado.bloqueio_faturamento) AS BLOQ_FATURAMENTO
-	,RTRIM(clientes_atacado.bloqueio_expedicao) AS BLOQ_EXPEDICAO
-	,RTRIM(clientes_atacado.bloqueio_pedidos) AS BLOQ_PEDIDOS
-	,RTRIM(clientes_atacado.obs) AS OBS
-	,RTRIM(cadastro_cli_for.obs_de_faturamento) AS OBS_FATURAMENTO
+	,(clientes_atacado.tipo) AS TIPO_CLIENTE
+	,REPLACE(clientes_atacado.limite_credito,' ','') AS LIMITE_CREDITO
+	,REPLACE(clientes_atacado.sem_credito,' ','') AS SEM_CREDITO
+	,TRIM(clientes_atacado.tipo_bloqueio) AS TIPO_BLOQUEIO
+	,FORMAT(clientes_atacado.bloqueio_faturamento, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_FATURAMENTO --(clientes_atacado.bloqueio_faturamento) AS BLOQ_FATURAMENTO
+	,FORMAT(clientes_atacado.bloqueio_expedicao, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_EXPEDICAO
+	,FORMAT(clientes_atacado.bloqueio_pedidos, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_PEDIDOS
+	,TRIM(clientes_atacado.obs) AS OBS
+	,TRIM(cadastro_cli_for.obs_de_faturamento) AS OBS_FATURAMENTO
 	--Endereço e Contato
-	,RTRIM(cadastro_cli_for.cep) AS CEP
-	,RTRIM(cadastro_cli_for.endereco) AS ENDERECO
-	,RTRIM(cadastro_cli_for.complemento) AS END_COMPLEMENTO
-	,RTRIM(cadastro_cli_for.numero) AS END_NUMERO
-	,RTRIM(cadastro_cli_for.bairro) AS BAIRRO
-	,RTRIM(cadastro_cli_for.cidade) AS CIDADE
-	,RTRIM(cadastro_cli_for.uf) AS UF
-	,RTRIM(cadastro_cli_for.pais) AS PAIS
-	,RTRIM(cadastro_cli_for.ddi) AS DDI
-	,RTRIM(cadastro_cli_for.ddd1) AS DDD1
-	,RTRIM(cadastro_cli_for.telefone1) AS TELEFONE1 
-	,RTRIM(cadastro_cli_for.ramal1) AS RAMAL1
-	,RTRIM(cadastro_cli_for.ddd2) AS DDD2
-	,RTRIM(cadastro_cli_for.telefone2) AS TELEFONE2
-	,RTRIM(cadastro_cli_for.ramal2) AS RAMAL2
-	,RTRIM(cadastro_cli_for.email) AS EMAIL
+	,TRIM(cadastro_cli_for.cep) AS CEP
+	,TRIM(cadastro_cli_for.endereco) AS ENDERECO
+	,TRIM(cadastro_cli_for.complemento) AS END_COMPLEMENTO
+	,TRIM(cadastro_cli_for.numero) AS END_NUMERO
+	,TRIM(cadastro_cli_for.bairro) AS BAIRRO
+	,TRIM(cadastro_cli_for.cidade) AS CIDADE
+	,TRIM(cadastro_cli_for.uf) AS UF
+	,TRIM(cadastro_cli_for.pais) AS PAIS
+	,REPLACE(cadastro_cli_for.ddi,' ','') AS DDI
+	,REPLACE(cadastro_cli_for.ddd1,' ','') AS DDD1
+	,TRIM(cadastro_cli_for.telefone1) AS TELEFONE1 
+	,TRIM(cadastro_cli_for.ramal1) AS RAMAL1
+	,REPLACE(cadastro_cli_for.ddd2,' ','') AS DDD2
+	,REPLACE(cadastro_cli_for.telefone2,' ','') AS TELEFONE2
+	,TRIM(cadastro_cli_for.ramal2) AS RAMAL2
+	,TRIM(cadastro_cli_for.email) AS EMAIL
 	--Outras Info
-	,RTRIM(Isnull(clientes_atacado.aceita_juntar_ped, 0)) AS ACEITA_JUNTAR_PED
-	,RTRIM(cadastro_cli_for.cadastramento) AS DT_CADASTRO
-	,RTRIM(cadastro_cli_for.aniversario) AS DT_ANIVERSARIO
-	,RTRIM(cadastro_cli_for.indica_fornecedor) AS INDICA_FORNECEDOR
-	,RTRIM(cadastro_cli_for.indica_cliente) AS INDICA_CLIENTE
-	,RTRIM(cadastro_cli_for.ind_representante) AS INDICA_REPRESENTANTE
-	,RTRIM(cadastro_cli_for.indica_filial) AS INDICA_FILIAL
-	,RTRIM(cadastro_cli_for.aceita_dias_fixo) AS ACEITA_DIAS_FIXO
-	,RTRIM(clientes_atacado.prioridade) AS PRIORIDADE
-	,RTRIM(clientes_atacado.frete_a_pagar) AS FRETE_A_PAGAR
-	,RTRIM(clientes_atacado.conceito) AS CONCEITO
-	,RTRIM(clientes_atacado.filial) AS FILIAL
-	,RTRIM(cadastro_cli_for.indicador_fiscal_terceiro) AS INDICADOR_FISCAL_TERCEIROS
-	,RTRIM(ctb_lx_indicador_fiscal_terceiro.descricao_fiscal_terceiro) AS DESC_FISCAL_TERCEIROS
-	,RTRIM(clientes_atacado.ctb_conta_contabil) AS CONTA_CONTABIL
-	,RTRIM(ctb_conta_plano.desc_conta) AS CTB_DESC_CONTA
+	,REPLACE(Isnull(clientes_atacado.aceita_juntar_ped, 0),' ','') AS ACEITA_JUNTAR_PED
+	,FORMAT(cadastro_cli_for.cadastramento, 'dd/MM/yyyy', 'pt-BR') AS DT_CADASTRO
+	,FORMAT(cadastro_cli_for.aniversario, 'dd/MM/yyyy', 'pt-BR') AS DT_ANIVERSARIO
+	,REPLACE(cadastro_cli_for.indica_fornecedor,' ','') AS INDICA_FORNECEDOR
+	,REPLACE(cadastro_cli_for.indica_cliente,' ','') AS INDICA_CLIENTE
+	,REPLACE(cadastro_cli_for.ind_representante,' ','') AS INDICA_REPRESENTANTE
+	,REPLACE(cadastro_cli_for.indica_filial,' ','') AS INDICA_FILIAL
+	,REPLACE(cadastro_cli_for.aceita_dias_fixo,' ','') AS ACEITA_DIAS_FIXO
+	,REPLACE(clientes_atacado.prioridade,' ','') AS PRIORIDADE
+	,REPLACE(clientes_atacado.frete_a_pagar,' ','') AS FRETE_A_PAGAR
+	,TRIM(clientes_atacado.conceito) AS CONCEITO
+	,TRIM(clientes_atacado.filial) AS FILIAL
+	,REPLACE(cadastro_cli_for.indicador_fiscal_terceiro,' ','') AS INDICADOR_FISCAL_TERCEIROS
+	,TRIM(ctb_lx_indicador_fiscal_terceiro.descricao_fiscal_terceiro) AS DESC_FISCAL_TERCEIROS
+	,TRIM(clientes_atacado.ctb_conta_contabil) AS CONTA_CONTABIL
+	,TRIM(ctb_conta_plano.desc_conta) AS CTB_DESC_CONTA
 	--,clientes_atacado.conta_contabil
 	--,contas_plano.desc_conta
 	--,cadastro_cli_for.fax
