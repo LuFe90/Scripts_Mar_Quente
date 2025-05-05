@@ -1,54 +1,54 @@
 SELECT 
-	cadastro_cli_for.clifor
-	,cadastro_cli_for.nome_clifor
-	,cadastro_cli_for.razao_social
-	,cadastro_cli_for.pj_pf
-	,cadastro_cli_for.cgc_cpf
-	,cadastro_cli_for.rg_ie
+	RTRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
+	,RTRIM(cadastro_cli_for.nome_clifor) AS NOME
+	,RTRIM(cadastro_cli_for.razao_social) AS RAZAO_SOCIAL
+	,RTRIM(cadastro_cli_for.pj_pf) AS PF_PJ -- 1 PF / 0 PJ
+	,RTRIM(cadastro_cli_for.cgc_cpf) AS CPF_CNPJ
+	,RTRIM(cadastro_cli_for.rg_ie) AS RG_IE
 	--Verifica campos de bloqueio do cadastro
-	,clientes_atacado.tipo_bloqueio
-	,clientes_atacado.bloqueio_faturamento
-	,clientes_atacado.bloqueio_expedicao
-	,clientes_atacado.bloqueio_pedidos
-	,clientes_atacado.limite_credito
-	,clientes_atacado.sem_credito
-	,cadastro_cli_for.obs_de_faturamento
-	,clientes_atacado.obs
+	,RTRIM(clientes_atacado.tipo) AS TIPO_CLIENTE
+	,RTRIM(clientes_atacado.limite_credito) AS LIMITE_CREDITO
+	,RTRIM(clientes_atacado.sem_credito) AS SEM_CREDITO
+	,RTRIM(clientes_atacado.tipo_bloqueio) AS TIPO_BLOQUEIO
+	,RTRIM(clientes_atacado.bloqueio_faturamento) AS BLOQ_FATURAMENTO
+	,RTRIM(clientes_atacado.bloqueio_expedicao) AS BLOQ_EXPEDICAO
+	,RTRIM(clientes_atacado.bloqueio_pedidos) AS BLOQ_PEDIDOS
+	,RTRIM(clientes_atacado.obs) AS OBS
+	,RTRIM(cadastro_cli_for.obs_de_faturamento) AS OBS_FATURAMENTO
 	--Endereço e Contato
-	,cadastro_cli_for.cep
-	,cadastro_cli_for.endereco
-	,cadastro_cli_for.complemento
-	,cadastro_cli_for.numero
-	,cadastro_cli_for.cidade
-	,cadastro_cli_for.bairro
-	,cadastro_cli_for.uf
-	,cadastro_cli_for.pais
-	,cadastro_cli_for.ddi
-	,cadastro_cli_for.ddd1
-	,cadastro_cli_for.telefone1
-	,cadastro_cli_for.ramal1
-	,cadastro_cli_for.ddd2
-	,cadastro_cli_for.telefone2
-	,cadastro_cli_for.ramal2
-	,cadastro_cli_for.email
+	,RTRIM(cadastro_cli_for.cep) AS CEP
+	,RTRIM(cadastro_cli_for.endereco) AS ENDERECO
+	,RTRIM(cadastro_cli_for.complemento) AS END_COMPLEMENTO
+	,RTRIM(cadastro_cli_for.numero) AS END_NUMERO
+	,RTRIM(cadastro_cli_for.bairro) AS BAIRRO
+	,RTRIM(cadastro_cli_for.cidade) AS CIDADE
+	,RTRIM(cadastro_cli_for.uf) AS UF
+	,RTRIM(cadastro_cli_for.pais) AS PAIS
+	,RTRIM(cadastro_cli_for.ddi) AS DDI
+	,RTRIM(cadastro_cli_for.ddd1) AS DDD1
+	,RTRIM(cadastro_cli_for.telefone1) AS TELEFONE1 
+	,RTRIM(cadastro_cli_for.ramal1) AS RAMAL1
+	,RTRIM(cadastro_cli_for.ddd2) AS DDD2
+	,RTRIM(cadastro_cli_for.telefone2) AS TELEFONE2
+	,RTRIM(cadastro_cli_for.ramal2) AS RAMAL2
+	,RTRIM(cadastro_cli_for.email) AS EMAIL
 	--Outras Info
-	,clientes_atacado.tipo
-	,Isnull(clientes_atacado.aceita_juntar_ped, 0) AS ACEITA_JUNTAR_PED
-	,cadastro_cli_for.cadastramento
-	,cadastro_cli_for.aniversario
-	,cadastro_cli_for.indica_fornecedor
-	,cadastro_cli_for.indica_cliente
-	,cadastro_cli_for.ind_representante
-	,cadastro_cli_for.indica_filial
-	,cadastro_cli_for.aceita_dias_fixo
-	,clientes_atacado.prioridade
-	,clientes_atacado.frete_a_pagar
-	,clientes_atacado.conceito
-	,clientes_atacado.filial
-	,cadastro_cli_for.indicador_fiscal_terceiro
-	,ctb_lx_indicador_fiscal_terceiro.descricao_fiscal_terceiro
-	,clientes_atacado.ctb_conta_contabil
-	,ctb_conta_plano.desc_conta AS CTB_DESC_CONTA
+	,RTRIM(Isnull(clientes_atacado.aceita_juntar_ped, 0)) AS ACEITA_JUNTAR_PED
+	,RTRIM(cadastro_cli_for.cadastramento) AS DT_CADASTRO
+	,RTRIM(cadastro_cli_for.aniversario) AS DT_ANIVERSARIO
+	,RTRIM(cadastro_cli_for.indica_fornecedor) AS INDICA_FORNECEDOR
+	,RTRIM(cadastro_cli_for.indica_cliente) AS INDICA_CLIENTE
+	,RTRIM(cadastro_cli_for.ind_representante) AS INDICA_REPRESENTANTE
+	,RTRIM(cadastro_cli_for.indica_filial) AS INDICA_FILIAL
+	,RTRIM(cadastro_cli_for.aceita_dias_fixo) AS ACEITA_DIAS_FIXO
+	,RTRIM(clientes_atacado.prioridade) AS PRIORIDADE
+	,RTRIM(clientes_atacado.frete_a_pagar) AS FRETE_A_PAGAR
+	,RTRIM(clientes_atacado.conceito) AS CONCEITO
+	,RTRIM(clientes_atacado.filial) AS FILIAL
+	,RTRIM(cadastro_cli_for.indicador_fiscal_terceiro) AS INDICADOR_FISCAL_TERCEIROS
+	,RTRIM(ctb_lx_indicador_fiscal_terceiro.descricao_fiscal_terceiro) AS DESC_FISCAL_TERCEIROS
+	,RTRIM(clientes_atacado.ctb_conta_contabil) AS CONTA_CONTABIL
+	,RTRIM(ctb_conta_plano.desc_conta) AS CTB_DESC_CONTA
 	--,clientes_atacado.conta_contabil
 	--,contas_plano.desc_conta
 	--,cadastro_cli_for.fax
