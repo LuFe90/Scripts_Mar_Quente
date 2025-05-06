@@ -1,5 +1,6 @@
 SELECT
 	REPLACE(cadastro_cli_for.INATIVO,' ','') AS INATIVO -- 0 Ativo / 1 Inativo
+	,clientes_atacado.ecatalogosloja AS ENVIA_ECATALOGO
 	,TRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
 	,TRIM(cadastro_cli_for.nome_clifor) AS NOME
 	--,TRIM(cadastro_cli_for.razao_social) AS RAZAO_SOCIAL
