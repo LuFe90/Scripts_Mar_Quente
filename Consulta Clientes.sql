@@ -1,6 +1,6 @@
 SELECT
 	REPLACE(cadastro_cli_for.INATIVO,' ','') AS INATIVO -- 0 Ativo / 1 Inativo
-	,clientes_atacado.ecatalogosloja AS ENVIA_ECATALOGO
+	,clientes_atacado.ecatalogosloja AS ENVIA_ECATALOGO -- 0 Não Envia / 1 Envia
 	,TRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
 	,TRIM(cadastro_cli_for.nome_clifor) AS NOME
 	--,TRIM(cadastro_cli_for.razao_social) AS RAZAO_SOCIAL
@@ -15,7 +15,30 @@ SELECT
 	,FORMAT(clientes_atacado.bloqueio_faturamento, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_FATURAMENTO --(clientes_atacado.bloqueio_faturamento) AS BLOQ_FATURAMENTO
 	,FORMAT(clientes_atacado.bloqueio_expedicao, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_EXPEDICAO
 	,FORMAT(clientes_atacado.bloqueio_pedidos, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_PEDIDOS
-	--,TRIM(clientes_atacado.obs) AS OBS
+	
+FROM   clientes_atacado
+       INNER JOIN cadastro_cli_for
+               ON clientes_atacado.cliente_atacado = cadastro_cli_for.nome_clifor
+       LEFT JOIN contas_plano
+              ON clientes_atacado.conta_contabil = contas_plano.conta_contabil
+       LEFT JOIN ctb_conta_plano
+              ON clientes_atacado.ctb_conta_contabil = ctb_conta_plano.conta_contabil
+       LEFT JOIN bancos
+              ON cadastro_cli_for.banco = bancos.banco
+       INNER JOIN filiais
+               ON clientes_atacado.filial = filiais.filial
+       LEFT JOIN ctb_lx_indicador_fiscal_terceiro
+              ON cadastro_cli_for.indicador_fiscal_terceiro = ctb_lx_indicador_fiscal_terceiro.indicador_fiscal_terceiro
+       LEFT JOIN ctb_excecao_grupo
+              ON cadastro_cli_for.id_excecao_grupo = ctb_excecao_grupo.id_excecao_grupo
+WHERE  cadastro_cli_for.INATIVO = 0
+		AND clientes_atacado.tipo_bloqueio NOT IN ('FUNCIONARIO')
+ORDER BY cadastro_cli_for.INATIVO desc, clientes_atacado.tipo_bloqueio
+
+
+/**/
+
+--,TRIM(clientes_atacado.obs) AS OBS
 	--,TRIM(cadastro_cli_for.obs_de_faturamento) AS OBS_FATURAMENTO
 	--Endereço e Contato
 	--,TRIM(cadastro_cli_for.cep) AS CEP
@@ -169,24 +192,6 @@ SELECT
 	--,cadastro_cli_for.entrega_complemento
 	--,cadastro_cli_for.cobranca_numero
 	--,cadastro_cli_for.entrega_numero
-FROM   clientes_atacado
-       INNER JOIN cadastro_cli_for
-               ON clientes_atacado.cliente_atacado = cadastro_cli_for.nome_clifor
-       LEFT JOIN contas_plano
-              ON clientes_atacado.conta_contabil = contas_plano.conta_contabil
-       LEFT JOIN ctb_conta_plano
-              ON clientes_atacado.ctb_conta_contabil = ctb_conta_plano.conta_contabil
-       LEFT JOIN bancos
-              ON cadastro_cli_for.banco = bancos.banco
-       INNER JOIN filiais
-               ON clientes_atacado.filial = filiais.filial
-       LEFT JOIN ctb_lx_indicador_fiscal_terceiro
-              ON cadastro_cli_for.indicador_fiscal_terceiro = ctb_lx_indicador_fiscal_terceiro.indicador_fiscal_terceiro
-       LEFT JOIN ctb_excecao_grupo
-              ON cadastro_cli_for.id_excecao_grupo = ctb_excecao_grupo.id_excecao_grupo
-WHERE  cadastro_cli_for.INATIVO = 0
-		AND clientes_atacado.tipo_bloqueio NOT IN ('FUNCIONARIO')
-ORDER BY cadastro_cli_for.INATIVO desc, clientes_atacado.tipo_bloqueio
 
 --select distinct(tipo_bloqueio) from clientes_atacado
 --select distinct(tipo) from clientes_atacado
