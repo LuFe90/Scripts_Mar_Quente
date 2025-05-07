@@ -64,7 +64,70 @@ WHERE   cadastro_cli_for.INATIVO = 0
 ORDER BY cadastro_cli_for.INATIVO desc, clientes_atacado.tipo_bloqueio
 
 
-/**/
+/*
+SELECT
+	--REPLACE(cadastro_cli_for.INATIVO,' ','') AS INATIVO -- 0 Ativo / 1 Inativo
+	clientes_atacado.ecatalogosloja AS ENVIA_ECATALOGO -- 0 Não Envia / 1 Envia
+	,loja_vendedores.vendedor
+    --,loja_vendedores.nome_vendedor
+	,TRIM(cadastro_cli_for.clifor) AS COD_CLIENTE
+	,TRIM(cadastro_cli_for.nome_clifor) AS NOME
+	,TRIM(cadastro_cli_for.razao_social) AS RAZAO_SOCIAL
+	--,REPLACE(cadastro_cli_for.pj_pf,' ','') AS PF_PJ -- 1 PF / 0 PJ
+	,TRIM(cadastro_cli_for.cgc_cpf) AS CPF_CNPJ
+	,TRIM(cadastro_cli_for.rg_ie) AS RG_IE
+	--Endereço e Contato
+	,TRIM(cadastro_cli_for.cep) AS CEP
+	,TRIM(cadastro_cli_for.endereco) AS ENDERECO
+	--,TRIM(cadastro_cli_for.complemento) AS END_COMPLEMENTO
+	,TRIM(cadastro_cli_for.numero) AS END_NUMERO
+	,TRIM(cadastro_cli_for.bairro) AS BAIRRO
+	,TRIM(cadastro_cli_for.cidade) AS CIDADE
+	,TRIM(cadastro_cli_for.uf) AS UF
+	--,TRIM(cadastro_cli_for.pais) AS PAIS
+	--,REPLACE(cadastro_cli_for.ddi,' ','') AS DDI
+	,REPLACE(cadastro_cli_for.ddd1,' ','') AS DDD1
+	,TRIM(cadastro_cli_for.telefone1) AS TELEFONE1 
+	--,TRIM(cadastro_cli_for.ramal1) AS RAMAL1
+	,REPLACE(cadastro_cli_for.ddd2,' ','') AS DDD2
+	,REPLACE(cadastro_cli_for.telefone2,' ','') AS TELEFONE2
+	,REPLACE(cadastro_cli_for.dddfax,' ','') AS DDD_FAX
+	,REPLACE(cadastro_cli_for.fax,' ','') AS TELEFONE_FAX
+	--,TRIM(cadastro_cli_for.ramal2) AS RAMAL2
+	,TRIM(cadastro_cli_for.email) AS EMAIL
+	--Verifica campos de bloqueio do cadastro
+	,(clientes_atacado.tipo) AS TIPO_CLIENTE
+	,REPLACE(clientes_atacado.limite_credito,' ','') AS LIMITE_CREDITO
+	,REPLACE(clientes_atacado.sem_credito,' ','') AS SEM_CREDITO
+	,TRIM(clientes_atacado.tipo_bloqueio) AS TIPO_BLOQUEIO
+	,FORMAT(clientes_atacado.bloqueio_faturamento, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_FATURAMENTO 
+	,FORMAT(clientes_atacado.bloqueio_expedicao, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_EXPEDICAO
+	,FORMAT(clientes_atacado.bloqueio_pedidos, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_PEDIDOS
+FROM   clientes_atacado
+       INNER JOIN cadastro_cli_for
+               ON clientes_atacado.cliente_atacado = cadastro_cli_for.nome_clifor
+	   LEFT JOIN loja_vendedores
+              ON loja_vendedores.vendedor = clientes_atacado.vendedor
+       --LEFT JOIN contas_plano
+       --       ON clientes_atacado.conta_contabil = contas_plano.conta_contabil
+       --LEFT JOIN ctb_conta_plano
+       --       ON clientes_atacado.ctb_conta_contabil = ctb_conta_plano.conta_contabil
+       --LEFT JOIN bancos
+       --       ON cadastro_cli_for.banco = bancos.banco
+       INNER JOIN filiais
+               ON clientes_atacado.filial = filiais.filial
+       --LEFT JOIN ctb_lx_indicador_fiscal_terceiro
+       --       ON cadastro_cli_for.indicador_fiscal_terceiro = ctb_lx_indicador_fiscal_terceiro.indicador_fiscal_terceiro
+       --LEFT JOIN ctb_excecao_grupo
+       --       ON cadastro_cli_for.id_excecao_grupo = ctb_excecao_grupo.id_excecao_grupo
+WHERE   cadastro_cli_for.INATIVO = 0
+and		clientes_atacado.ecatalogosloja = 1
+		AND clientes_atacado.tipo_bloqueio NOT IN ('FUNCIONARIO')
+		--AND cadastro_cli_for.CGC_CPF 
+		--IN ('82463298553')
+		--and clientes_atacado.vendedor != ''
+ORDER BY clientes_atacado.vendedor desc-- cadastro_cli_for.INATIVO desc, clientes_atacado.tipo_bloqueio
+*/
 
 --,TRIM(clientes_atacado.obs) AS OBS
 	--,TRIM(cadastro_cli_for.obs_de_faturamento) AS OBS_FATURAMENTO
