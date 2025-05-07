@@ -1,3 +1,5 @@
+--Essa consulta os clientes que estão integrados no eCatalogo
+
 SELECT 
 C.VENDEDOR,
 B.razao_social AS NAME,
@@ -32,6 +34,7 @@ FROM   clientes_atacado AS F
                ON A.cliente_atacado = B.nome_clifor
        INNER JOIN loja_vendedores AS C
                ON A.vendedor = C.vendedor
+	--Este join serve para validar quando ha um cadastro atualizado para integrar, se nao retornar, nao tem
        --LEFT JOIN mq_integracao_ecatalogos_lojas AS D
        --        ON B.clifor = D.chave
        INNER JOIN clientes_atacado AS E
