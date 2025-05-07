@@ -1,33 +1,34 @@
 --Essa consulta os clientes que estão integrados no eCatalogo
 SELECT 
-	   C.VENDEDOR AS COD_VENDEDOR,
-	   C.VENDEDOR_APELIDO AS NOME_VENDEDOR,
-       B.cod_clifor               AS COD_CLIENTE,
-	   B.razao_social             AS RAZAO_SOCIAL,
-       B.nome_clifor              AS NOME,
-       B.cgc_cpf                  AS CNPJ,
-       B.email                    AS EMAIL,
-       CASE
+	  F.ecatalogosloja AS ENVIA_ECATALOGO_ATIVO
+	  ,RTRIM(LTRIM(C.VENDEDOR)) AS COD_VENDEDOR
+	  ,RTRIM(LTRIM(C.VENDEDOR_APELIDO)) AS NOME_VENDEDOR
+      ,RTRIM(LTRIM(B.cod_clifor)) AS COD_CLIENTE
+	  ,RTRIM(LTRIM(B.razao_social)) AS RAZAO_SOCIAL
+      ,RTRIM(LTRIM(B.nome_clifor)) AS NOME
+      ,RTRIM(LTRIM(B.cgc_cpf)) AS CNPJ
+      ,RTRIM(LTRIM(B.email)) AS EMAIL
+      ,CASE
          WHEN B.inativo = 1 THEN 0
          ELSE 1
-       END                        AS ATIVO,
-       B.endereco,
-       B.cidade,
-       B.uf,
-       B.bairro,
-       B.numero,
-       B.cep,
-       B.ddd1,
-       B.telefone1,
-       B.ddd2,
-       B.telefone2,
-       B.dddfax,
-       B.fax,	   
-       E.limite_credito,
-	   E.TIPO_BLOQUEIO,
-       E.bloqueio_expedicao,
-       E.bloqueio_pedidos,
-       E.bloqueio_faturamento
+       END                        AS ATIVO
+       ,RTRIM(LTRIM(B.endereco)) AS ENDERECO
+       ,RTRIM(LTRIM(B.cidade)) AS CIDADE
+       ,RTRIM(LTRIM(B.uf)) AS UF
+       ,RTRIM(LTRIM(B.bairro)) AS BAIRRO
+       ,RTRIM(LTRIM(B.numero)) AS NUMERO_END
+       ,RTRIM(LTRIM(B.cep)) AS CEP
+       ,RTRIM(LTRIM(B.ddd1)) AS DDD1
+       ,RTRIM(LTRIM(B.telefone1)) AS TEL1 
+       ,RTRIM(LTRIM(B.ddd2)) AS DDD2
+       ,RTRIM(LTRIM(B.telefone2)) AS TEL2 
+       ,RTRIM(LTRIM(B.dddfax)) AS DDDFAX
+       ,RTRIM(LTRIM(B.fax)) AS FAX
+       ,RTRIM(LTRIM(E.limite_credito)) AS LIMITE_CREDITO
+	   ,RTRIM(LTRIM(E.TIPO_BLOQUEIO)) AS TIPO_BLOQ
+       ,FORMAT(F.bloqueio_faturamento, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_FATURAMENTO 
+	   ,FORMAT(F.bloqueio_expedicao, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_EXPEDICAO
+	   ,FORMAT(F.bloqueio_pedidos, 'dd/MM/yyyy', 'pt-BR') AS BLOQ_PEDIDOS
 	   --CASE
        --  WHEN E.sem_credito = 1 THEN 0
        --  ELSE 1
@@ -48,4 +49,4 @@ FROM   mq_cliente_vendedor AS A
                ON B.cod_clifor = E.clifor
 WHERE  B.inativo = 0
        --AND  D.MODULO = 'CLIENTES_PRIORITY'
-       AND F.ecatalogosloja = 1 
+       --AND F.ecatalogosloja = 1 
