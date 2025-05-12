@@ -1,7 +1,7 @@
 --Valida Produto na Integração para INCLUSÃO
 
 --NOT IN - Produtos que não estão cadastrados para inclusão, se aparecer vai ser atualizado
---Tirar o NOT da linha 39 - Fila para atualização
+--Tirar o NOT da linha 41 - Fila para atualização
 
 SELECT B.DESC_PRODUTO,
 	   B.PRODUTO,
