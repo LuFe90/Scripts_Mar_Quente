@@ -12,7 +12,7 @@
                                F.PRECO1,
 	                           G.CODIGO_BARRA,
 	                           A.DISPONIVEL,
-	                           H.QTDE
+	                           C.QTDE
                         FROM   MQ_ESTOQUE_DISPONIVEL_PEDIDO_NEW AS A
                                INNER JOIN PRODUTOS AS B
                                        ON A.PRODUTO = B.PRODUTO
