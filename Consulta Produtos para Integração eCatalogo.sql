@@ -17,6 +17,7 @@ SELECT
 FROM   MQ_ESTOQUE_DISPONIVEL_PEDIDO_NEW AS A
 	INNER JOIN PRODUTOS AS B
 		ON A.PRODUTO = B.PRODUTO
+		--Verificar se os produtos estão na tabela de cadastro do integrador pro ecatalogo, quando não estiver nessa tabela, deve ser feito o insert do produto
 		AND  B.PRODUTO  IN (SELECT PRODUTO FROM MQ_INTEGRACAO_eCATALOGOS_LOJAS_PRODUTOS AS X 
 						WHERE X.PRODUTO = B.PRODUTO )
 		--AND  B.eCataLogosLoja = 1
@@ -33,9 +34,8 @@ FROM   MQ_ESTOQUE_DISPONIVEL_PEDIDO_NEW AS A
 			AND F.CODIGO_TAB_PRECO = '01'
 	INNER JOIN PRODUTOS_BARRA AS G
 		ON B.PRODUTO = G.PRODUTO
-			--AND G.CODIGO_BARRA LIKE '7%' --codigo de barra validado no G.CODIGO_BARRA_PADRAO = '1', mais performatico
+			AND G.CODIGO_BARRA LIKE '7%' --codigo de barra validado no G.CODIGO_BARRA_PADRAO = '1', mais performatico
 			--AND A.COR_PRODUTO = G.COR_PRODUTO --deixa a consulta mais lenta
-			AND G.CODIGO_BARRA_PADRAO = '1'                        
 WHERE  A.DISPONIVEL >= C.QTDE
 		AND  B.eCataLogosLoja = 1
 ORDER BY A.PRODUTO
