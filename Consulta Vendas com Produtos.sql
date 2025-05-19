@@ -32,7 +32,7 @@ v.FILIAL
 ,vp.QTDE_LIQUIDA
 ,vp.VALOR_LIQUIDO
 ,v.CODIGO_TAB_PRECO
-,v.TIPO
+,v.TIPO AS TIPO_VENDA
 ,vp.ENTREGA
 ,v.DATA_RECEBIMENTO
 ,v.DATA_ENVIO
@@ -62,10 +62,67 @@ from vendas v
 INNER JOIN vendas_produto vp
 	ON v.pedido = vp.pedido
 where
---v.pedido_externo in ('LJ00000285','LJ00000343','LJ00000344')
+--v.pedido_externo in ('LJ00000448') --pedido eCatalogo
 --and 
-vp.produto in ('29.01.2444','29.01.2445')
-ORDER BY v.PEDIDO_EXTERNO desc
+--vp.produto in ('06.13.0290','06.13.0117','06.13.0403','23.31.0546')
+--AND FILIAL = 'MAR QUENTE - FILIAL 09'
+--and v.PEDIDO not in ('LA-01551838') --pedido Linx
+v.TIPO like '%overgirls%'
+ORDER BY --v.PEDIDO_EXTERNO desc
+--vp.ENTREGA desc
+vp.PRODUTO desc
+
+	
+/*
+select distinct(tipo) from vendas order by tipo
+
+	Select da tabela vendas_produto
+SELECT 
+ PEDIDO
+,PRODUTO
+,COR_PRODUTO
+,ENTREGA
+,ITEM_PEDIDO
+,NUMERO_CONJUNTO
+,PACKS
+,STATUS_VENDA_ATUAL
+,QTDE_ORIGINAL
+,QTDE_EMBALADA
+,QTDE_ENTREGAR
+,QTDE_ENTREGUE
+,QTDE_DEVOLVIDA
+,QTDE_CANCELADA
+,DESCONTO_ITEM
+,VALOR_CANCELADO
+,VALOR_ORIGINAL
+,VALOR_ENTREGAR
+,VALOR_DEVOLVIDO
+,VALOR_ENTREGUE
+,VO1
+,VO2
+,VO3
+,VO4
+,VO5
+,VO6
+,VO7
+,VO8
+,VO9
+,VO10
+,VE1
+,VE2
+,VE3
+,VE4
+,VE5
+,VE6
+,VE7
+,VE8
+,VE9
+,VE10
+,QTDE_LIQUIDA
+,VALOR_LIQUIDO
+,DATA_PARA_TRANSFERENCIA
+FROM VENDAS_PRODUTO WHERE PEDIDO in ('LA-01552742')
+*/
 
 /*Select da tabela vendas_produto
 SELECT 
