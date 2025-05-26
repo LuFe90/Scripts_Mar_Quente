@@ -37,7 +37,7 @@ FROM   MQ_CLIENTE_VENDEDOR AS A
 		ON A.CLIENTE_ATACADO = B.NOME_CLIFOR
 	INNER JOIN LOJA_VENDEDORES AS C
 		ON A.VENDEDOR = LTRIM(RTRIM(C.VENDEDOR))
-	--Esta linha valida se o cliente está na fila de integração do e-catalogo. Se não retornar o cliente, não está para integrar.
+	--Este JOIN valida se o cliente está na fila de integração do e-catalogo. Se não retornar o cliente, não está para integrar.
 	INNER JOIN MQ_INTEGRACAO_ECATALOGOS_LOJAS AS D
 		ON B.CLIFOR = D.CHAVE
 	INNER JOIN CLIENTES_ATACADO AS E
