@@ -30,14 +30,14 @@ SELECT DISTINCT
 	,D.ID
 	,D.ACAO
 	,CASE WHEN B.INATIVO = 1 THEN 'INATIVO' ELSE 'ATIVO' END	CLIENTE_ATIVO
-FROM   MQ_CLIENTE_VENDEDOR AS A
+FROM   MQ_CLIENTE_VENDEDOR AS A --Essa tabela MQ_CLIENTE_VENDEDOR valida o cliente vinculado ao vendedor no e-catalogo
 	INNER JOIN CLIENTES_ATACADO AS F
 		ON A.CLIENTE_ATACADO = F.CLIENTE_ATACADO
 	INNER JOIN CADASTRO_CLI_FOR AS B
 		ON A.CLIENTE_ATACADO = B.NOME_CLIFOR
 	INNER JOIN LOJA_VENDEDORES AS C
 		ON A.VENDEDOR = LTRIM(RTRIM(C.VENDEDOR))
-	--Este JOIN valida se o cliente está na fila de integração do e-catalogo. Se não retornar o cliente, não está para integrar.
+	--Este JOIN na tabela MQ_INTEGRACAO_ECATALOGOS_LOJAS valida se o cliente está na fila de integração do e-catalogo. Se não retornar o cliente, não está para integrar.
 	INNER JOIN MQ_INTEGRACAO_ECATALOGOS_LOJAS AS D
 		ON B.CLIFOR = D.CHAVE
 	INNER JOIN CLIENTES_ATACADO AS E
