@@ -11,7 +11,10 @@ WITH ProdutosFiltrados AS (
         A.FILIAL,
         J.COD_FILIAL,
         ROW_NUMBER() OVER (
-            PARTITION BY G.GRUPO_PRODUTO, A.FILIAL
+            PARTITION BY 
+			G.SUBGRUPO_PRODUTO, --Adicionado o subgrupo para abranger mais referencias diferentes do mesmo grupo
+			G.GRUPO_PRODUTO, 
+			A.FILIAL
             ORDER BY A.DISPONIVEL DESC ) AS RN
     FROM MQ_ESTOQUE_DISPONIVEL_PEDIDO_NEW AS A
 		INNER JOIN PRODUTOS_PACKS_PERMITIDOS AS D
@@ -25,8 +28,7 @@ WITH ProdutosFiltrados AS (
 		INNER JOIN FILIAIS AS J
 			ON A.FILIAL = J.FILIAL
     WHERE 
-        J.COD_FILIAL IN ('000043', '000015') -- Joinville e Guarulhos
-        AND A.DISPONIVEL >= D.QTDE
+        J.COD_FILIAL IN ('000043', '000015') -- Guarulhos e Joinville
         AND G.COLECAO IN ('55', '56')
 ),
 ProdutosSelecionados AS (
@@ -35,14 +37,14 @@ ProdutosSelecionados AS (
 )
 SELECT TOP 25 *
 FROM ProdutosSelecionados
-WHERE COD_FILIAL = '000043' -- Joinville
+WHERE COD_FILIAL = '000043' -- Guarulhos
 
 UNION ALL
 
 SELECT TOP 25 *
 FROM ProdutosSelecionados
-WHERE COD_FILIAL = '000015' -- Guarulhos
-
+WHERE COD_FILIAL = '000015' -- Joinville
+ORDER BY FILIAL, REFERENCIA, GRUPO_PRODUTO
 
 /*
 --Script original
