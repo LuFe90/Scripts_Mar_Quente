@@ -1,0 +1,7 @@
+/*1*/ SELECT ordem_producao, produto, emissao, status FROM PRODUCAO_ORDEM where ordem_producao = '213359'
+/*2*/ SELECT ordem_producao, tarefa, fase_producao, setor_producao, recurso_produtivo, status FROM PRODUCAO_TAREFAS where ordem_producao = '213359' and tarefa = '5661761'
+/*3*/ SELECT ordem_producao, tarefa, ordem_servico, produto FROM PRODUCAO_OS_TAREFAS where ordem_producao = '213359' and ordem_servico = '3521549'
+/*4*/ SELECT ordem_servico, recurso_produtivo, fase_producao, setor_producao, nf_saida, serie_nf FROM PRODUCAO_ORDEM_SERVICO where ordem_servico = '3521549'
+/*5*/ select nome_clifor, desc_recurso, recurso_produtivo, codigo_sisplan, envia_sisplan from producao_recursos where codigo_sisplan = '04326'
+/*6*/ select nome_clifor, clifor, razao_social, cgc_cpf, pj_pf, inativo from cadastro_cli_for where nome_clifor = 'MARILIA ISRAEL'
+/*7*/ select fornecedor, clifor, cgc_cpf, inativo from fornecedores where clifor = '207467'
