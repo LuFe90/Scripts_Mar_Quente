@@ -1,0 +1,22 @@
+----------------------------------------------------
+--CONSULTA_INTEGRACAO_IMAGENS_ECAT
+--Consulta para verificar a integração das imagens (via serviço python)
+----------------------------------------------------
+
+SELECT A.PRODUTO,
+        C.COD_FILIAL,
+        A.NOME_IMAGEM,
+        A.SEQUENCIA_IMAGEM,
+        A.ID
+FROM MQ_INTEGRACAO_ECATALOGOS_LOJA_IMAGENS AS A
+INNER JOIN MQ_INTEGRACAO_eCATALOGOS_LOJAS_PRODUTOS AS B
+    ON A.PRODUTO = B.PRODUTO
+INNER JOIN FILIAIS AS C
+    ON B.COD_FILIAL = C.COD_FILIAL
+
+
+
+SELECT * FROM MQ_LOG_INTEGRACAO_eCATALOGOS_LOJAS
+WHERE MODULO = 'IMAGENS'
+AND DATA_INTEGRACAO >= '20250814'
+AND STATUS = 'S'
